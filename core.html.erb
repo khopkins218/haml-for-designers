@@ -1,0 +1,65 @@
+<div class="fixed-footer-top-trigger"></div>
+
+<section class="content-area-white">
+  <header class="max-width has-padding">
+    <h1 id="fittext1" class="large js-fit-text" style="text-align:center">Hello <%= @metro.name %>!</h1>
+    <p class="medium centered-page-subhead">General Assembly transforms thinkers into creators through education and opportunities in technology, business, and design.</p>
+  </header>
+</section>
+
+<%= render 'shared/education_galleries', immersives: @immersive_instance_pairs, courses: @course_instance_pairs %>
+
+<div class="fixed-footer">
+  <section id="email-banner" class="clearfix dark-grey">
+    <div class="max-width has-padding location-email-subscription-form">
+      <div class="signup email-banner-signup">
+        <div class="message">
+          <h4>Hello, <%= @metro.name %>!</h4>
+          <p>Find out about upcoming programs and events.</p>
+        </div>
+        <form action="/education" class="signup-page" data-location="<%= @current_metro.try &:slug %>">
+          <input type="email" name="email" placeholder="Your email">
+          <input type="button" class="button submit-subscription" value="Get Updates">
+        </form>
+      </div>
+      <div class="confirmation" style="display: none">
+        <h4>Clear some room in your inbox.</h4>
+        <p>We'll be sending you updates on upcoming programs and events in <%= @current_metro.name %>.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<% if @instructors.any? %>
+  <section class="content-area-grey">
+    <div class="max-width has-padding instructors">
+      <header class="section-header">
+        <h1><%= @metro.name %> Instructors</h1>
+        <p class="subhead">Featuring thought-leaders, experts, and industry professionals, our <%= @metro.name %> instructors are skilled practitioners with real-world experience in their field. Here are a few of them:</p>
+      </header>
+      <div class="grid-row four">
+        <% @instructors.each do |instructor| %>
+          <%= render 'shared/instructors', instructor: instructor %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
+<section class="content-area-toprule">
+  <div class="max-width has-padding">
+    <div class="grid-row four campuses">
+      <div class="column">
+        <h3>Visit Our <%= @metro.name %> <%= "Location".pluralize(@metro.campuses.active.count) %></h3>
+      </div>
+      <% @metro.campuses.active.each do |campus| %>
+        <div class="campus column">
+          <p class="small"><%= campus.name %>
+            <br>
+            <%= campus.address %>
+            <br>
+            <%= campus.city %> <%= campus.region if campus.region %> <%= campus.postal_code if campus.postal_code %></p>
+        </div><!--.campus-->
+      <% end %>
+    </div><!--.campuses-->
+  </div>
+</section>

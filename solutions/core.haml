@@ -1,0 +1,57 @@
+.fixed-footer-top-trigger
+%section.content-area-white
+  %header.max-width.had-padding
+    %h1#fittext1.large.js-fit-text{ style: 'text-align:center;' }
+      = "Hello #{ @metro.name }!"
+    %p.medium.centered-page-subhead
+      General Assembly transforms thinkers into creators through education and opportunities in technology, business, and design.
+= render 'shared/education_galleries', immersives: @immersive_instance_pairs, courses: @course_instance_pairs
+
+.fixed-footer
+  %section#email-banner.clearfix.dark-grey
+    .max-width.has-padding.location-email-subscription-form
+      .signup.email-banner-signup
+        .message
+          %h4
+            = "Hello, #{ @metro.name }!"
+          %p
+            Find out about upcoming programs and events.
+        %form.signup-page{ action: '/education', data: { location: @current_metro.try(&:slug) }}
+          %input{ type: 'email', name: 'email', placeholder: 'Your email'}
+          %input.button.submit-subscription{ type: 'button', value: 'Get Updates'}
+      .confirmation{ style: 'display: none;'}
+        %h4 Clear some room in your inbox.
+        %p
+          We'll be sending you updates on upcoming programs and events in 
+          = "#{ @current_metro.name }."
+
+- if @instructors.any?
+  %section.content-area-grey
+    .max-width.has-padding.instructors
+      %header.section-header
+        %h1
+          = "#{ @metro.name } Instructors"
+        %p.subhead
+          Featuring thought-leaders, experts, and industry professionals, our
+          = @metro.name
+          &nbsp; instructors are skilled practitioners with real-world experience in their field. Here are a few of them:
+      .grid-row.four
+        - @instructors.each do |instructor|
+          = render 'shared/instructors', instructor: instructor
+          
+%section.content-area-toprule
+  .max-width.has-padding
+    .grid-row.four-campuses
+      .column
+        %h3
+          Visit Our &nbsp;
+          = "#{ @metro.name } #{ 'Location'.pluralize(@metro.campuses.active.count) }"
+      - @metro.campuses.active.each do |campus|
+        .campus.column
+          %p.small
+            = campus.name
+            %br
+            = campus.address
+            %br
+            = "#{ campus.city } #{ campus.region } #{ campus.postal_code }"
+

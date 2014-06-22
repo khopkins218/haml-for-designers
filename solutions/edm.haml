@@ -1,0 +1,58 @@
+- content_for :title do
+  Recommended Lessons
+
+%p.page-title-right
+  = @dash_hash.each_with_object([]) { |t,arr| arr << t[1].map(&:id) }.flatten.compact.uniq.length
+  &nbsp; Lessons
+
+%p.page-title-leading
+  - if current_user.cohort_id == 5
+    A selection of lessons for you, curated by your leadership at Coty.
+  - else
+    A personalized selection of lessons for you.
+
+- @dash_hash.keys.any?
+  %ul.listing-topic
+    - @dash_hash.each do |topic, lessons|
+      %li.listing-topic-item
+        .listing-topic-item-meta
+          %h3.listing-topic-item-title
+            = topic.name
+          - if topic.description
+            %p
+              = topic.description
+        .listing-topic-item-content
+          %ul.listing-lessons
+            - lessons.each do |lesson|
+              %li.listing-lessons-item.icon-direction-right{ 'data-text-reveal' => true, 'class' => "listing-lessons-item-#{ lesson.status_for_user current_user}" }
+                .listing-lessons-item-description
+                  %h3.listing-lessons-item-title
+                    .listing-lessons-item-icons
+                      - lesson.topics.each do |topic|
+                        %span{ class: "icon-#{ topic.name.gsub('and', '').gsub('&', '').titleize.gsub(' ', '').underscore }"}
+                          = topic.name
+                    = lesson.name
+                  %p{ 'data-text-reveal-content' => true }
+                    = lesson.name
+
+                - if lesson.published?
+                  .listing-lessons-item-meta
+                    - if lesson.status_for_user(current_user) == :completed
+                      %span.icon-check
+                        Completed
+                    - else
+                      %p
+                        = lesson.minutes_to_complete
+                        &nbsp;min
+                  .listing-lessons-item-cta
+                    - case lesson.status_for_user(current_user)
+                    - when :completed
+                      = link_to 'Restart', lesson, class: 'button-secondary button-fluid'
+                    - when :started
+                      = link_to 'Resume', lesson, class: 'button-tertiary button-fluid'/
+                    - when :not_started
+                      = link_to 'Start', lesson, class: 'button-primary button-fluid'
+                -else
+                  .listing-lessons-item-soon
+                    %span.highlighted-soon Coming Soon
+                    

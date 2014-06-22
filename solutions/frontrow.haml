@@ -1,0 +1,36 @@
+%section.content-area-grey.front-row-banner
+  %header.front-row-intro
+    %h1.large
+      Watch &amp; LEARN
+    %h4 Say hello to
+      = render 'shared/front_row_brand', html_class: 'front-row-banner-logo'
+  .front-row-banner-content.max-width.has-padding
+    %article
+      %p.intro
+        Learn what you want, when you want. As a GA Front Row subscriber, you get:
+        %ul.checklist.min.intro-features
+          %li Unlimited access to all upcoming live streams
+          %li On-demand streaming classes taught by top practitioners
+          %li A growing video library, updated weekly
+        .get-access-top-white
+          %p
+            Get access for only 
+            = "#{ price_str(SubscriptionPlan::DEFAULT_PRICE_IN_CENTS) }/month"
+            No risk — you can cancel at any time!
+      = frontrow_lander_subscription_link 'top'
+  .front-row-banner-background-grey.max-width
+%footer#company-logos.content-area-grey.arrow-down
+  .max-width.logo-group
+    %p Instructors share real-world experiences from:
+    .logo.logo-padding
+      = image_tag "company-logos/google-logo.gif", alt: "Google logo"
+    .logo.logo-padding
+      = image_tag "company-logos/amazon-logo.gif", alt: "Amazon logo"
+    .logo.logo-padding
+      = iimage_tag "company-logos/reddit-logo.gif", alt: "Reddit logo"
+    .logo.logo-padding
+      = image_tag "company-logos/tumblr-logo.gif", alt: "tumblr logo"
+    .logo.logo-padding
+      = image_tag "company-logos/yahoo-logo.gif", alt: "Yahoo logo"
+    .logo.logo-padding
+      = image_tag "company-logos/stripe-logo.gif", alt: "Stripe logo"

@@ -1,0 +1,79 @@
+<% content_for :title do %>Recommended Lessons<% end %>
+
+<p class="page-title-right">
+  <%= @dash_hash.each_with_object([]) { |t,arr| arr << t[1].map(&:id) }.flatten.compact.uniq.length -%> Lessons
+</p>
+
+<p class="page-title-leading">
+  <% if current_user.cohort_id == 5 %>
+      A selection of lessons for you, curated by your leadership at Coty.
+  <% else %>
+      A personalized selection of lessons for you.
+  <% end %>
+</p>
+
+
+<% if @dash_hash.keys.any? %>
+  <ul class="listing-topic">
+    <% @dash_hash.each do |topic, lessons| %>
+      <li class="listing-topic-item">
+        <div class="listing-topic-item-meta">
+          <h3 class="listing-topic-item-title">
+            <%= topic.name %>
+          </h3>
+          <% if topic.description %>
+            <p><%= topic.description %></p>
+          <% end %>
+        </div>
+        <div class="listing-topic-item-content">
+          <ul class="listing-lessons">
+            <% lessons.each do |lesson| %>
+              <li class="listing-lessons-item listing-lessons-item-<%= lesson.status_for_user(current_user) %> icon-direction-right" data-text-reveal>
+                <div class="listing-lessons-item-description">
+                  <h3 class="listing-lessons-item-title">
+                    <div class="listing-lessons-item-icons">
+                      <% lesson.topics.each do |topic| %>
+                        <span class="icon-<%= topic.name.gsub('and','').gsub('&','').titleize.gsub(' ','').underscore %>"><%= topic.name %></span>
+                      <% end %>
+                    </div>
+                    <%= lesson.name %>
+                  </h3>
+                  <p data-text-reveal-content>
+                    <%= lesson.description %>
+                  </p>
+                </div>
+
+                <% if lesson.published? %>
+                  <div class="listing-lessons-item-meta">
+                    <% if lesson.status_for_user(current_user) == :completed %>
+                      <span class="icon-check">Completed</span>
+                    <% else %>
+                      <p>
+                        <%= lesson.minutes_to_complete %> min
+                      </p>
+                    <% end %>
+                  </div>
+                  <div class="listing-lessons-item-cta">
+                    <% case lesson.status_for_user(current_user) %>
+                    <% when :completed %>
+                      <%= link_to "Restart", lesson, class: "button-secondary button-fluid" %>
+                    <% when :started %>
+                      <%= link_to "Resume", lesson, class: "button-tertiary button-fluid" %>
+                    <% when :not_started %>
+                      <%= link_to "Start", lesson, class: "button-primary button-fluid" %>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <div class="listing-lessons-item-soon">
+                    <span class="highlighted-soon">Coming Soon</span>
+                  </div>
+                <% end %>
+              </li>
+            <% end if lessons %>
+          </ul>
+        </div>
+      </li>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

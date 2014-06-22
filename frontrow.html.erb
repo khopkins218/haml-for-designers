@@ -1,0 +1,51 @@
+<section class="content-area-grey front-row-banner">
+  <header class="front-row-intro">
+    <h1 class="large">Watch &amp; LEARN</h1>
+    <h4>Say hello to </h4>
+    <%= render 'shared/front_row_brand', html_class: "front-row-banner-logo" %>
+  </header>
+  <div class="front-row-banner-content max-width has-padding">
+    <article>
+      <p class="intro">Learn what you want, when you want. As a GA Front Row subscriber, you get:</p>
+      <br>
+      <ul class="checklist mint intro-features">
+        <li>Unlimited access to all upcoming live streams</li>
+        <li>On-demand streaming classes taught by top practitioners</li>
+        <li>A growing video library, updated weekly</li>
+      </ul>
+      <div class="get-access-top-white">
+        <p>
+          Get access for only <%= price_str SubscriptionPlan::DEFAULT_PRICE_IN_CENTS %>/month.<br>
+          No risk — you can cancel at any time!
+        </p>
+      </div>
+      <%= frontrow_lander_subscription_link("top") %>
+    </article>
+  </div>
+  <div class="front-row-banner-background-grey max-width">
+  </div>
+</section>
+
+<footer id="company-logos" class="content-area-grey arrow-down">
+  <div class="max-width logo-group">
+    <p class="centered-header">Instructors share real-world experiences from:</p>
+    <div class="logo logo-padding">
+      <%= image_tag "company-logos/google-logo.gif", alt: "Google logo" %>
+    </div>
+    <div class="logo logo-padding">
+      <%= image_tag "company-logos/amazon-logo.gif", alt: "Amazon logo" %>
+    </div>
+    <div class="logo logo-padding">
+      <%= image_tag "company-logos/reddit-logo.gif", alt: "Reddit logo" %>
+    </div>
+    <div class="logo logo-padding">
+      <%= image_tag "company-logos/tumblr-logo.gif", alt: "tumblr logo" %>
+    </div>
+    <div class="logo logo-padding">
+      <%= image_tag "company-logos/yahoo-logo.gif", alt: "Yahoo logo"%>
+    </div>
+    <div class="logo logo-padding">
+      <%= image_tag "company-logos/stripe-logo.gif", alt: "Stripe logo"%>
+    </div>
+  </div>
+</footer>
